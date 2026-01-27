@@ -1,0 +1,43 @@
+services:
+  mydb:
+    image: mysql:8
+    volumes:
+      - dbdata:/var/lib/mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: redhat
+      MYSQL_DATABASE: tgindia
+      MYSQL_USER: kishan
+      MYSQL_PASSWORD: kishan123
+    networks:
+      - mytg
+
+  mywp:
+    image: wordpress:latest
+    depends_on:
+      - mydb
+    ports:
+      - "32000:80"
+    volumes:
+      - wpdata:/var/www/html
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: mydb:3306
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: redhat
+      WORDPRESS_DB_NAME: tgindia
+    networks:
+      - mytg
+
+volumes:
+  dbdata:
+  wpdata:
+
+networks:
+  mytg:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.10.0/24
+          gateway: 192.168.10.1
+

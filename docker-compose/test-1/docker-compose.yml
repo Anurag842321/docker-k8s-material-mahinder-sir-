@@ -1,0 +1,21 @@
+services:
+  myapp1:
+    image: 933538/repo2026:nginx-v1.0
+    restart: unless-stopped
+    ports:
+      - "32800:80"
+  myapp2:
+    image: 933538/repo2026:nginx-v1.0
+    ports:
+      - "32801:80"
+  myapp3:
+    image: 933538/repo2026:nodejs-v1.0
+    ports:
+      - "32802:8080"
+  myapp4:
+    image: 933538/repo2026:nginx-v1.0
+    ports:
+      - "32803:80"
+
+
+
