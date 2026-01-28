@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp2
+  namespace: mytg
+  labels:
+    app: frontend
+    env: prod
+    version: v1
+  annotations:
+    aboutpod: "this is dummy pod for practiose"
+    owner: "kishan | kishan@gmail.com"
+spec:
+  nodeName: wn2.tg.com
+  containers:
+    - name: c1
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+
+
+  
