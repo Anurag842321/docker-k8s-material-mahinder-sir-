@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp100
+  namespace: mytg
+  labels:
+    env: stage
+    app: frontend
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:  #this is hard rule node-affinity
+      - labelSelector:  
+          matchExpressions:
+           - key: app 
+             operator: In
+             values: 
+             - frontend
+        topologyKey: "kubernetes.io/hostname"     
+  containers:
+  - name: c50
+    image: 933538/repo2026:nginx-v1.0
+    ports:
+    - containerPort: 80
+

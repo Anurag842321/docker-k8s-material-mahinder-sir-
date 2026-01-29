@@ -2,11 +2,11 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    run: myapp3
+    app: frontend
   name: myapp3
 spec:
   containers:
-  - image: rockylinux:latest
+  - image: nginx:latest
     name: myapp3
     resources: {}
   dnsPolicy: ClusterFirst

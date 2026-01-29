@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-soft-anti-affinity
+  namespace: mytg
+  labels:
+    app: backend
+spec:
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:  #-----this is soft rule for pod-anti-affinity---- #
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - frontend
+          topologyKey: kubernetes.io/hostname
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+
+
+#------->“Prefer scheduling this pod away from nodes that already run pods labeledapp=frontend, but don’t block scheduling if that’s not possible.”<--------#

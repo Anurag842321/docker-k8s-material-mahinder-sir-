@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod1
+  namespace: mytg
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:  #this is hard rule node-affinity
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: disk
+            operator: In
+            values:
+            - ssd
+  containers:
+  - name: c5
+    image: 933538/repo2026:nginx-v1.0
+    ports:
+    - containerPort: 80
+

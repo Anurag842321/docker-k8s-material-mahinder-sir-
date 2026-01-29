@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp9
+  namespace: mytg
+  labels:
+    env: stage
+    app: frontend
+  annotations:
+    owner: "Kishan | kishan@gmail.com"
+spec:
+  containers:
+    - name: c1
+      image: nginx:latest
+
+
+
+#------- cmd for cordon a node #kubectl cordon <node-name> --------#

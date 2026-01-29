@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp1000
+  namespace: mytg
+  labels:
+    env: stage
+    app: backend
+spec:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:  #-----this is hard rule for pod-anti-affinity----#
+      - labelSelector:
+         matchLabels:
+          app: frontend  
+        topologyKey: "kubernetes.io/hostname"     
+  containers:
+  - name: c500
+    image: 933538/repo2026:nginx-v1.0
+    ports:
+    - containerPort: 80
+
+
+
+    #--------->If every node already has a frontend pod → ❌ Pod stays Pending<---------#

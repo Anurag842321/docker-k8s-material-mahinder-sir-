@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-soft-affinity
+  namespace: mytg
+  labels:
+    app: backend
+spec:
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:   #-----soft rule pod affinity------#
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - frontend
+          topologyKey: kubernetes.io/hostname
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+

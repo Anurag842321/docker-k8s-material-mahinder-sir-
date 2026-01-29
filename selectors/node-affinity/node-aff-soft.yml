@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod2
+  namespace: mytg
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:  #this is soft  rule node-affinity
+       - weight: 100
+         preference:
+           matchExpressions:
+           - key: disk
+             operator: In
+             values:
+             - hdd
+  containers:
+  - name: c7
+    image: 933538/repo2026:nginx-v1.0
+    ports:
+    - containerPort: 80
+
