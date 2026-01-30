@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    env: stage
+    app: frontend
+  name: myapp3
+spec:
+  containers:
+  - image: 933538/repo2026:nginx-v1.0
+    name: c2
+    ports:
+      - containerPort: 80
+  - image: 933538/repo2026:nodejs-v1.0
+    name: c3
+    ports:
+      - containerPort: 8080
