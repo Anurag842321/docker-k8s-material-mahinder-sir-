@@ -1,0 +1,29 @@
+                                   #-----Create pod affinity(together) with soft rule-----#
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app2
+  namespace: mytg
+  labels:   # required for pod-affinity / pod-anti-affinity
+    app: frontend
+    env: test
+spec:
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 50
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: env
+                  operator: In
+                  values:
+                    - prod
+            topologyKey: kubernetes.io/hostname   #-----without this key pod affinity not work this is mandatory-----#
+  containers:
+    - name: c1
+      image: nginx:latest
+
+      
+

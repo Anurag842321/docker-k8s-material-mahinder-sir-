@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-stable
+  namespace: mytg
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      route: stable
+      app: frontend
+  template:
+    metadata: 
+      labels:
+        route: stable
+        app: frontend
+    spec:
+      containers:
+        - name: c1
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+

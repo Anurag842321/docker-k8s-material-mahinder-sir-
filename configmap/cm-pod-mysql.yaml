@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-cm
+  namespace: mytg
+spec:
+  containers:
+    - name: c1
+      image: mysql:latest
+      ports:
+        - containerPort: 3306
+      env:                                #----|configmap works on this keyword----|#
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mycm          #---|Name of cm is entered here---|#
+              key: MYSQL_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysec          #---|Name of secret is entered here---|#
+              key: MYSQL_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mycm          #---|Name of cm is entered here---|#
+              key: MYSQL_DATABASE
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysec         #---|Name of sec is entered here---|#
+              key: MYSQL_ROOT_PASSWORD
+                        
+                   #----|IN THIS POD FOR TESTING WE USE BOTH CM or SECRET|----#
+
+
+     #---|command for creating configmap|---#
+         # kubectl create cm <myconfig> --from-literal=<mypasswd>=<redhat123> -n <mytg>
+     #-----|hum chahein to is cmd mein aur bhi literal ka use kr kste hain via --from-literal=<key>=<value>|------# 

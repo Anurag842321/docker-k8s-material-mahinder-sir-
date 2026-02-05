@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydeploy
+  namespace: mytg
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: frontend
+  strategy:
+   rollingUpdate:
+     maxSurge: 25%
+     maxUnavailable: 25%
+   type: RollingUpdate
+    
+  template:
+    metadata:   #---|In deployment there is  no need of name and namespace inside template.metadata. it auto-generates pod name|--#
+      labels:
+        env: prod
+        app: frontend
+    spec:
+      containers:
+        - name: c1
+          image: nginx:1.18
+          ports:
+            - containerPort: 80
+
+            #----|For rolling update = #kubectl set image deployment <deploy-name> <con-name>:<image-name/ID>|----#
+  #---|Rolling update with revision history = #kubectl set image deployment <deploy-name> <con-name>:<image-name/ID> --record|---#
+  #---|To verify revision history = #kubectl rollout history deployment <deploy-name>|----#
+  #---|To check current status of deploy = #kubectl rollout status deployment <deploy-name>|----#
+  #---|For rollback one step = #kubectl rollout undo  deployment <deploy-name>  |---#
+  #---|Rollback to specific record version = #kubectl rollout undo  deployment <deploy-name> --to-revision=<4>  |---#
+  #
+  # NOTE:- Rolling-update migrate servers gradually #

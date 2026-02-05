@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-agent
+  namespace: mytg
+spec:
+  selector:
+    matchLabels:
+      app: log-agent
+  template:
+    metadata:
+      labels:
+        app: log-agent
+    spec:
+      containers:
+        - name: log-agent
+          image: nginx:1.18
+          ports:
+            - containerPort: 80
+
+#--------------------------------------------------------------------------------------------#
+      # 🧠 What this DaemonSet does                                                          |
+      #    Ensures exactly one Pod per node                                                  |
+      #    When:                                                                             |  
+      #       - a new node joins → Pod is created automatically                              |
+      #       - a node is removed → Pod is deleted                                           |
+      #       - No need to specify replicas (DaemonSet controls it)                          |
+#--------------------------------------------------------------------------------------------#
+
+
+
+#--------------------------------------------------------------------------------------------#
+        #⭐ DaemonSet on specific nodes (NodeSelector example)
+               #   spec:
+               #     template:
+               #       spec:
+               #         nodeSelector:
+               #           disktype: ssd
+#--------------------------------------------------------------------------------------------#

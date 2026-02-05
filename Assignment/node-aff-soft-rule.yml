@@ -1,0 +1,32 @@
+                                   #-----Create node affinity with soft rule-----#
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app1
+  namespace: mytg
+  labels:
+    app: backend
+    env: test
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 50                     
+          preference:
+            matchExpressions:
+              - key: disk
+                operator: In
+                values:
+                  - ssd 
+  containers:
+    - name: c1
+      image: nginx:latest
+
+
+      
+#-------| Always remember when using soft-rule for node-affinity (weight and preference) is used instead of nodeSelectorTerms|-------#
+
+
+#------Labeling node is very important in node-affinity------#
+#------After run a pod if we delete labels from node it will not affect the health of pod , pod is still in running mode-----#

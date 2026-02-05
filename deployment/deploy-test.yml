@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydeploy
+  namespace: mytg
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:  #---|No need of name & namespec in this section because deployment automatically provide name to pods|---#
+      labels:
+        env: prod
+        app: frontend
+    spec:
+      containers:
+        - name: c1
+          image: nginx:1.18
+          ports:
+            - containerPort: 80
+
+
+
+            #----|Imperative way to scale replicas = #kubectl scale deployment <mydeploy> --replicas=<7>|----#
+            #----|Imperative way to edit YAML = #kubectl edit <resource-name>|----#
+            # Resource-name = replicaSet , Deployment , STS #

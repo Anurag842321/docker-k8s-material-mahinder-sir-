@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-canary
+  namespace: mytg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      route: canary
+      app: frontend
+  template:
+    metadata: 
+      labels:
+        route: canary
+        app: frontend
+    spec:
+      containers:
+        - name: c1
+          image: 933538/repo2026:nginx-v1.0
+          ports:
+            - containerPort: 80
+
+
+
+            #NodePort cannot control percentage directly, so Canary is achieved by:
+            #                 - Same Service
+            #                 - Same app label
+            #                 - Different replica counts
+            #                 - Traffic is distributed based on number of Pods.
+            #
+            #               
+            #
+            #
+            #------|10% traffic goes to newer version(canary) or 90% goes to older version(stable)|-----#                 
+
+            
+            # *Promote Stable to canary:-
+            #----|        -  #kubectl scale deploy frontend-canary --replicas=5 -n mytg    |-----#
+            #----|        -  #kubectl scale deploy frontend-stable --replicas=0 -n mytg    |-----#

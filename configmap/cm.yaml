@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mycm
+data:
+  MYSQL_DATABASE: TG-STUDENT
+  MYSQL_USER: kishan
+  MYSQL_HOST: localhost
+
+
+  #Command to create configMap in imperartive way is given below:-
+  #----| kubectl create cm <cm-name> --feom-literal=MYSQL_USER=kishan -n mytg |----#
+  #
+  #
+  #Command to check cm list
+  #----| kubectl get cm |----#
+
+
+
+
+

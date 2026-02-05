@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-blue
+  namespace: mytg
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      colour: blue
+      app: frontend
+  template:
+    metadata: 
+      labels:
+        env: prod
+        colour: blue
+        app: frontend
+    spec:
+      containers:
+        - name: c1
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+
+
+            #-----|Blue-Green deploy mein traffic ko manually tranfer kiya jata hai blue--->green or green-->blue|-----#
+                     #-------------|Blue-Green deployment mein traffic instant tranfer ho jata hai|-----------#

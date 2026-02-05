@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myrs
+  namespace: mytg
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: frontend
+      env: stage
+  template:
+    metadata:
+      labels:
+        app: frontend
+        env: stage
+    spec:
+      containers:
+        - name: c1
+          image: nginx:latest
+
+
+
+#-------------------|when write yaml for replicaSet(rs) always remember {rti}|----------------#
+#----------------|following cmd is used to creat replicaset via dry-run|------------------#
+#-----kubectl create deployment myapp500 --image=nginx --dry-run=client -o yaml > replica.yaml-----#
+#-----|Base of ReplicaSet is Pod|------#

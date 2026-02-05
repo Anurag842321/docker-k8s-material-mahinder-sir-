@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-green
+  namespace: mytg
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      colour: green
+  template:
+    metadata: 
+      labels:
+        colour: green
+    spec:
+      containers:
+        - name: c1
+          image: 933538/repo2026:nginx-v1.0
+          ports:
+            - containerPort: 80
+

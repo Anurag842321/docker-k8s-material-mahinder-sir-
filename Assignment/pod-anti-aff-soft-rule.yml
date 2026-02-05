@@ -1,0 +1,29 @@
+                                   #-----Create pod affinity(anti) with soft rule-----#
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app3
+  namespace: mytg
+  labels:   # required for pod-affinity / pod-anti-affinity
+    app: frontend
+    env: test
+spec:
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 50
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: env
+                  operator: In
+                  values:
+                    - test 
+            topologyKey: kubernetes.io/hostname   #-----without this key pod affinity not work this is mandatory-----#
+  containers:
+    - name: c1
+      image: nginx:latest
+
+      
+
